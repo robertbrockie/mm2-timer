@@ -1,9 +1,11 @@
 import React from 'react';
 
 function App() {
-  return (
-    <div></div>
-  );
+    return (
+        <div className="container">
+            <h1>Mega Man Timer</h1>
+        </div>
+    );
 }
 
 export default App;
