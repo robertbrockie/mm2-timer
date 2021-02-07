@@ -1,1 +1,1 @@
-# mm2-timer
+# Mega Man 2 Timer
