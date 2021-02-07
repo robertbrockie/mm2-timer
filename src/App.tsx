@@ -8,13 +8,11 @@ function App() {
 
     useEffect(() => {
         if (startTimer) {
-            const timeout = setTimeout(() => {
-            setSeconds(seconds + 1);
-            }, 1000);
+            const timeout = setTimeout(() => setSeconds(seconds + 1), 1000);
         
             return () => clearTimeout(timeout);
         }
-    },[startTimer, seconds]);
+    }, [startTimer, seconds]);
 
     function handleClunk() {
         setStartTimer(true);
@@ -22,10 +20,14 @@ function App() {
         if (activeSegment < Segments.length - 1) {
             setActiveSegment(activeSegment + 1);
         } else {
-            setActiveSegment(-1);
-            setSeconds(0);
-            setStartTimer(false);
+            reset();
         }
+    }
+
+    function reset() {
+        setActiveSegment(-1);
+        setSeconds(0);
+        setStartTimer(false);
     }
 
     return (
@@ -58,6 +60,16 @@ function App() {
             >
                 { activeSegment === -1 ? 'Start Run' : 'Clunk!' }
             </button>
+
+            { startTimer && 
+                <button
+                    type="button"
+                    className="btn btn-danger btn-lg btn-block"
+                    onClick={() => { if(window.confirm('Are you sure?')) { reset(); }}}
+                >
+                    Reset
+                </button>
+            }
         </div>
     );
 }
