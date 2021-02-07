@@ -3,6 +3,7 @@ import Segments, { Segment } from './Segments';
 
 function App() {
     const [activeSegment, setActiveSegment] = useState(-1);
+    const [runningSegments, setRunningSegments] = useState<Array<number>>([]);
     const [startTimer, setStartTimer] = useState(false);
     const [seconds, setSeconds] = useState(0);
 
@@ -18,6 +19,8 @@ function App() {
         setStartTimer(true);
 
         if (activeSegment < Segments.length - 1) {
+            let newRunningSegments = [...runningSegments, seconds];
+            setRunningSegments(newRunningSegments);
             setActiveSegment(activeSegment + 1);
         } else {
             reset();
@@ -27,12 +30,13 @@ function App() {
     function reset() {
         setActiveSegment(-1);
         setSeconds(0);
+        setRunningSegments([]);
         setStartTimer(false);
     }
 
     return (
         <div className="container">
-            <h1>Mega Man Timer</h1>
+            <h1>Mega Man 2 Timer</h1>
             <br/>
             <table className="table">
                 <thead>
@@ -46,7 +50,9 @@ function App() {
                     { Segments.map((segment: Segment, index: number) =>
                         <tr key={index}  className={`${activeSegment === index ? 'table-warning' : ''}`}>
                             <th scope="row">{segment.label}</th>
-                            <td>{activeSegment === index ? seconds : ''}</td>
+                            <td>
+                                {activeSegment === index ? seconds : runningSegments[index] ? runningSegments[index] : ''}
+                            </td>
                             <td></td>
                         </tr>
                     )}
