@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
+import Segments, { Segment } from './Segments';
 
 function App() {
-
     const [activeSegment, setActiveSegment] = useState(-1);
-    const [startTimer, setStartTimer] = useState(false)
-    
+    const [startTimer, setStartTimer] = useState(false);
     const [seconds, setSeconds] = useState(0);
 
     useEffect(() => {
@@ -15,28 +14,12 @@ function App() {
         
             return () => clearTimeout(timeout);
         }
-       },[startTimer, seconds]);
-    
-    const segments = [
-        { label: 'Flash Man' },
-        { label: 'Air Man' },
-        { label: 'Quick Man' },
-        { label: 'Metal Man' },
-        { label: 'Bubble Man' },
-        { label: 'Heat Man' },
-        { label: 'Crash Man' },
-        { label: 'Wood Man' },
-        { label: 'Mecha Dragon' },
-        { label: 'Picopico-kun' },
-        { label: 'Gut Tanks' },
-        { label: 'Wily Machine 2' }, 
-        { label: 'Alien' },
-    ];
+    },[startTimer, seconds]);
 
     function handleClunk() {
         setStartTimer(true);
 
-        if (activeSegment < segments.length - 1) {
+        if (activeSegment < Segments.length - 1) {
             setActiveSegment(activeSegment + 1);
         } else {
             setActiveSegment(-1);
@@ -57,7 +40,7 @@ function App() {
                     </tr>
                 </thead>
                 <tbody>
-                    { segments.map((segment, index) =>
+                    { Segments.map((segment: Segment, index: number) =>
                         <tr key={index}  className={`${activeSegment === index ? 'table-warning' : ''}`}>
                             <th scope="row">{segment.label}</th>
                             <td>{activeSegment === index ? seconds : ''}</td>
@@ -72,7 +55,7 @@ function App() {
                 className="btn btn-primary btn-lg btn-block"
                 onClick={handleClunk}
             >
-                { activeSegment === 0 ? 'Start Run' : 'Clunk!' }
+                { activeSegment === -1 ? 'Start Run' : 'Clunk!' }
             </button>
         </div>
     );
