@@ -1,9 +1,21 @@
-import React, { useState, useLayoutEffect } from 'react';
-import { act } from 'react-dom/test-utils';
+import React, { useState, useEffect, useRef } from 'react';
 
 function App() {
 
-    const [activeSegment, setActiveSegment] = useState(0);
+    const [activeSegment, setActiveSegment] = useState(-1);
+    const [startTimer, setStartTimer] = useState(false)
+    
+    const [seconds, setSeconds] = useState(0);
+
+    useEffect(() => {
+        if (startTimer) {
+            const timeout = setTimeout(() => {
+            setSeconds(seconds + 1);
+            }, 1000);
+        
+            return () => clearTimeout(timeout);
+        }
+       },[startTimer, seconds]);
     
     const segments = [
         { label: 'Flash Man' },
@@ -22,10 +34,13 @@ function App() {
     ];
 
     function handleClunk() {
+        setStartTimer(true);
+
         if (activeSegment < segments.length - 1) {
             setActiveSegment(activeSegment + 1);
         } else {
-            setActiveSegment(0);
+            setActiveSegment(-1);
+            setStartTimer(false);
         }
     }
 
@@ -45,7 +60,7 @@ function App() {
                     { segments.map((segment, index) =>
                         <tr key={index}  className={`${activeSegment === index ? 'table-warning' : ''}`}>
                             <th scope="row">{segment.label}</th>
-                            <td>{index}</td>
+                            <td>{activeSegment === index ? seconds : ''}</td>
                             <td></td>
                         </tr>
                     )}
@@ -56,7 +71,9 @@ function App() {
                 type="button"
                 className="btn btn-primary btn-lg btn-block"
                 onClick={handleClunk}
-            >Clunk!</button>
+            >
+                { activeSegment === 0 ? 'Start Run' : 'Clunk!' }
+            </button>
         </div>
     );
 }
