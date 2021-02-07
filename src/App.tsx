@@ -19,8 +19,12 @@ function App() {
         setStartTimer(true);
 
         if (activeSegment < Segments.length - 1) {
-            let newRunningSegments = [...runningSegments, seconds];
-            setRunningSegments(newRunningSegments);
+            // store the last time
+            if (activeSegment != -1) {
+                let newRunningSegments = [...runningSegments, seconds];
+                setRunningSegments(newRunningSegments);
+            }
+
             setActiveSegment(activeSegment + 1);
         } else {
             reset();
@@ -34,26 +38,32 @@ function App() {
         setStartTimer(false);
     }
 
+    function formatSeconds(seconds:number) {
+        return seconds;
+    }
+
     return (
         <div className="container">
-            <h1>Mega Man 2 Timer</h1>
+            <h1>Mega Man 2 Speedrun Timer</h1>
             <br/>
-            <table className="table">
+            <table className="table table-borderless table-sm">
                 <thead>
                     <tr>
-                        <th scope="col">Segment</th>
-                        <th scope="col">Current</th>
-                        <th scope="col">Past</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col" className="text-center">Current</th>
+                        <th scope="col" className="text-center">Past</th>
                     </tr>
                 </thead>
                 <tbody>
                     { Segments.map((segment: Segment, index: number) =>
                         <tr key={index}  className={`${activeSegment === index ? 'table-warning' : ''}`}>
-                            <th scope="row">{segment.label}</th>
-                            <td>
-                                {activeSegment === index ? seconds : runningSegments[index] ? runningSegments[index] : ''}
+                            <th scope="row"><img src={segment.image}/></th>
+                            <td className="align-middle text-center">{segment.label}</td>
+                            <td className="align-middle text-center ">
+                                {activeSegment === index ? formatSeconds(seconds) : runningSegments[index] ? runningSegments[index] : ''}
                             </td>
-                            <td></td>
+                            <td className="align-middle text-center"></td>
                         </tr>
                     )}
                 </tbody>
