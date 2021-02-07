@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState, useLayoutEffect } from 'react';
+import { act } from 'react-dom/test-utils';
 
 function App() {
 
+    const [activeSegment, setActiveSegment] = useState(0);
+    
     const segments = [
         { label: 'Flash Man' },
         { label: 'Air Man' },
@@ -14,9 +17,18 @@ function App() {
         { label: 'Mecha Dragon' },
         { label: 'Picopico-kun' },
         { label: 'Gut Tanks' },
-        { label: 'Wily Machine 2' },
+        { label: 'Wily Machine 2' }, 
         { label: 'Alien' },
-    ]
+    ];
+
+    function handleClunk() {
+        if (activeSegment < segments.length - 1) {
+            setActiveSegment(activeSegment + 1);
+        } else {
+            setActiveSegment(0);
+        }
+    }
+
     return (
         <div className="container">
             <h1>Mega Man Timer</h1>
@@ -30,15 +42,21 @@ function App() {
                     </tr>
                 </thead>
                 <tbody>
-                    { segments.map(segment =>
-                        <tr>
+                    { segments.map((segment, index) =>
+                        <tr key={index}  className={`${activeSegment === index ? 'table-warning' : ''}`}>
                             <th scope="row">{segment.label}</th>
-                            <td></td>
+                            <td>{index}</td>
                             <td></td>
                         </tr>
                     )}
                 </tbody>
             </table>
+
+            <button
+                type="button"
+                className="btn btn-primary btn-lg btn-block"
+                onClick={handleClunk}
+            >Clunk!</button>
         </div>
     );
 }
