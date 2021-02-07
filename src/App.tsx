@@ -23,6 +23,7 @@ function App() {
             setActiveSegment(activeSegment + 1);
         } else {
             setActiveSegment(-1);
+            setSeconds(0);
             setStartTimer(false);
         }
     }
