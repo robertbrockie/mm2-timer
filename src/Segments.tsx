@@ -3,6 +3,22 @@ export interface Segment {
     image: string;
 }
 
+export const BestSegments = [
+    1000,
+    2000,
+    3000,
+    4000,
+    5000,
+    6000,
+    7000,
+    8000,
+    9000,
+    10000,
+    11000,
+    12000,
+    13000,
+]
+
 export default [
     { label: 'Flash Man', image: '/images/flash.png'},
     { label: 'Air Man', image: '/images/air.png' },
