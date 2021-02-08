@@ -88,13 +88,13 @@ function App() {
                                 <tr key={index}  className={`${activeSegment === index ? 'table-warning' : ''}`}>
                                     <th scope="row"><img className="split" src={segment.image}/></th>
                                     <td className="split-label align-middle">{segment.label}</td>
-                                    <td className="align-middle text-center ">
+                                    <td className="align-middle text-center split-current">
                                         {activeSegment === index ? formatSeconds(seconds) : runningSegments[index] ? formatSeconds(runningSegments[index]) : ''}
                                     </td>
-                                    <td className="align-middle text-center">
+                                    <td className="align-middle text-center split-prev">
                                         { prevSegments[index] ? formatSeconds(prevSegments[index]) : ''}
                                     </td>
-                                    <td className="align-middle text-center">
+                                    <td className="align-middle text-center split-best">
                                         { BestSegments[index] ? formatSeconds(BestSegments[index]) : ''}
                                     </td>
                                 </tr>

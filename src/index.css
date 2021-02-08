@@ -42,3 +42,24 @@ img.split {
   font-weight: bolder;
 }
 
+td.split-current {
+  font-family: monospace !important;
+  font-size: 16px;
+  color: navy;
+  font-weight: bold;
+}
+
+td.split-prev {
+  font-family: monospace !important;
+  font-size: 16px;
+  color: black;
+  font-weight: bold;
+}
+
+td.split-best {
+  font-family: monospace !important;
+  font-size: 16px;
+  color: gold;
+  font-weight: bold;
+}
+
