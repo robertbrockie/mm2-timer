@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Segments, { Segment, BestSegments } from './Segments';
+import { formatSeconds } from './utils/time';
 
 function App() {
     const [activeSegment, setActiveSegment] = useState(-1);
@@ -55,96 +56,84 @@ function App() {
         }
     }
 
-    function formatSeconds(seconds:number) {
-        if (seconds < 60) {
-            return `${seconds}s`;
-        } else {
-            return `${Math.floor(seconds/60)}m ${seconds % 60}s`;
-        }
-    }
-
-    if (exportPrev) {
-        return (
-            <div className="container">
-                <img className="logo" src="/images/logo.png"/>
-                <br/>
-                <pre>
-                    {JSON.stringify(prevSegments, null, 2)}
-                </pre>
-                <button
-                    type="button"
-                    className="btn btn-success btn-lg btn-block"
-                    onClick={() => setExportPrev(false)}
-                >
-                    Back
-                </button>
-            </div>
-        )
-    } else {
-        return (
-            <div className="container">
-                <img className="logo" src="/images/logo.png"/>
-                <br/>
-                <table className="table table-borderless table-sm">
-                    <thead>
-                        <tr>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
-                            <th scope="col" className="text-center">Current</th>
-                            <th scope="col" className="text-center">Past</th>
-                            <th scope="col" className="text-center">Best</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        { Segments.map((segment: Segment, index: number) =>
-                            <tr key={index}  className={`${activeSegment === index ? 'table-warning' : ''}`}>
-                                <th scope="row"><img className="split" src={segment.image}/></th>
-                                <td className="split-label align-middle">{segment.label}</td>
-                                <td className="align-middle text-center ">
-                                    {activeSegment === index ? formatSeconds(seconds) : runningSegments[index] ? formatSeconds(runningSegments[index]) : ''}
-                                </td>
-                                <td className="align-middle text-center">
-                                    { prevSegments[index] ? formatSeconds(prevSegments[index]) : ''}
-                                </td>
-                                <td className="align-middle text-center">
-                                    { BestSegments[index] ? formatSeconds(BestSegments[index]) : ''}
-                                </td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
-
-                <button
-                    type="button"
-                    className="btn btn-primary btn-lg btn-block"
-                    onClick={handleClunk}
-                >
-                    { activeSegment === -1 ? 'Let\'s Go!' : 'Clunk!' }
-                </button>
-
-                { startTimer ? 
+    return (
+        <div className="container">
+            <img className="logo" src="/images/logo.png"/>
+            <br/>
+            { exportPrev ? 
+                <React.Fragment>
+                    <pre>{JSON.stringify(prevSegments, null, 2)}</pre>
                     <button
                         type="button"
-                        className="btn btn-danger btn-lg btn-block"
-                        onClick={handleReset}
+                        className="btn btn-success btn-lg btn-block"
+                        onClick={() => setExportPrev(false)}
                     >
-                        Reset
+                        Back
                     </button>
-                    :
-                    prevSegments.length > 0 ?
+                </React.Fragment>
+                :
+                <React.Fragment>
+                    <table className="table table-borderless table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col" className="text-center">Current</th>
+                                <th scope="col" className="text-center">Past</th>
+                                <th scope="col" className="text-center">Best</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            { Segments.map((segment: Segment, index: number) =>
+                                <tr key={index}  className={`${activeSegment === index ? 'table-warning' : ''}`}>
+                                    <th scope="row"><img className="split" src={segment.image}/></th>
+                                    <td className="split-label align-middle">{segment.label}</td>
+                                    <td className="align-middle text-center ">
+                                        {activeSegment === index ? formatSeconds(seconds) : runningSegments[index] ? formatSeconds(runningSegments[index]) : ''}
+                                    </td>
+                                    <td className="align-middle text-center">
+                                        { prevSegments[index] ? formatSeconds(prevSegments[index]) : ''}
+                                    </td>
+                                    <td className="align-middle text-center">
+                                        { BestSegments[index] ? formatSeconds(BestSegments[index]) : ''}
+                                    </td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+
+                    <button
+                        type="button"
+                        className="btn btn-primary btn-lg btn-block"
+                        onClick={handleClunk}
+                    >
+                        { activeSegment === -1 ? 'Let\'s Go!' : 'Clunk!' }
+                    </button>
+
+                    { startTimer ? 
                         <button
                             type="button"
-                            className="btn btn-success btn-lg btn-block"
-                            onClick={handleExport}
+                            className="btn btn-danger btn-lg btn-block"
+                            onClick={handleReset}
                         >
-                            Export Previous Run as Best
+                            Reset
                         </button>
                         :
-                        null
-                }
-            </div>
-        );
-    }
+                        prevSegments.length > 0 ?
+                            <button
+                                type="button"
+                                className="btn btn-success btn-lg btn-block"
+                                onClick={handleExport}
+                            >
+                                Export Previous Run as Best
+                            </button>
+                            :
+                            null
+                    }
+                </React.Fragment>
+            }
+        </div>
+    );
 }
 
 export default App;
