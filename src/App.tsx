@@ -71,7 +71,7 @@ function App() {
     } else {
         return (
             <div className="container">
-                <h1>Mega Man 2 Speedrun Timer</h1>
+                <img className="logo" src="/images/logo.png"/>
                 <br/>
                 <table className="table table-borderless table-sm">
                     <thead>
@@ -86,8 +86,8 @@ function App() {
                     <tbody>
                         { Segments.map((segment: Segment, index: number) =>
                             <tr key={index}  className={`${activeSegment === index ? 'table-warning' : ''}`}>
-                                <th scope="row"><img src={segment.image}/></th>
-                                <td className="align-middle text-center">{segment.label}</td>
+                                <th scope="row"><img className="split" src={segment.image}/></th>
+                                <td className="split-label align-middle">{segment.label}</td>
                                 <td className="align-middle text-center ">
                                     {activeSegment === index ? formatSeconds(seconds) : runningSegments[index] ? formatSeconds(runningSegments[index]) : ''}
                                 </td>
@@ -110,7 +110,7 @@ function App() {
                     { activeSegment === -1 ? 'Let\'s Go!' : 'Clunk!' }
                 </button>
 
-                { startTimer && 
+                { startTimer ? 
                     <button
                         type="button"
                         className="btn btn-danger btn-lg btn-block"
@@ -118,9 +118,7 @@ function App() {
                     >
                         Reset
                     </button>
-                }
-
-                { startTimer === false &&
+                    :
                     <button
                         type="button"
                         className="btn btn-success btn-lg btn-block"
