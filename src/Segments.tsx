@@ -4,20 +4,21 @@ export interface Segment {
 }
 
 export const BestSegments = [
-    1000,
-    2000,
-    3000,
-    4000,
-    5000,
-    6000,
-    7000,
-    8000,
-    9000,
-    10000,
-    11000,
-    12000,
-    13000,
-]
+    127,
+    312,
+    486,
+    640,
+    803,
+    975,
+    1194,
+    1365,
+    1551,
+    1698,
+    1806,
+    2071,
+    2234,
+    2476,
+  ];
 
 export default [
     { label: 'Flash Man', image: '/images/flash.png'},
@@ -31,6 +32,7 @@ export default [
     { label: 'Mecha Dragon', image: '/images/flash.png' },
     { label: 'Picopico-kun', image: '/images/flash.png' },
     { label: 'Gut Tanks', image: '/images/flash.png' },
+    { label: '', image: '/images/flash.png'},
     { label: 'Wily Machine 2', image: '/images/flash.png' }, 
     { label: 'Alien', image: '/images/flash.png' },
 ];
