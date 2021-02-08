@@ -53,7 +53,21 @@ function App() {
     }
 
     if (exportPrev) {
-        return <h2>Export</h2>;
+        return (
+            <div className="container">
+                <h1>New Best Time!</h1>
+                <pre>
+                    {JSON.stringify(prevSegments, null, 2)}
+                </pre>
+                <button
+                    type="button"
+                    className="btn btn-success btn-lg btn-block"
+                    onClick={() => setExportPrev(false)}
+                >
+                    Back
+                </button>
+            </div>
+        )
     } else {
         return (
             <div className="container">
