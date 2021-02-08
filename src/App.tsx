@@ -22,7 +22,7 @@ function App() {
     function handleClunk() {
         setStartTimer(true);
 
-        if (activeSegment < Segments.length - 1) {
+        if (activeSegment < Segments.length) {
             // store the last time
             if (activeSegment != -1) {
                 let newRunningSegments = [...runningSegments, seconds];
@@ -33,7 +33,6 @@ function App() {
         } else {
             setPrevSegments([...runningSegments]);
             reset();
-            
         }
     }
 
@@ -42,6 +41,18 @@ function App() {
         setStartTimer(false);
         setSeconds(0);
         setRunningSegments([]);
+    }
+
+    function handleReset() {
+        if (window.confirm('Are you sure?')) {
+            reset();
+        }
+    }
+
+    function handleExport() {
+        if (window.confirm('Really that\'s awesome?')) {
+            setExportPrev(true);
+        }
     }
 
     function formatSeconds(seconds:number) {
@@ -72,7 +83,8 @@ function App() {
     } else {
         return (
             <div className="container">
-                
+                <img className="logo" src="/images/logo.png"/>
+                <br/>
                 <table className="table table-borderless table-sm">
                     <thead>
                         <tr>
@@ -114,18 +126,21 @@ function App() {
                     <button
                         type="button"
                         className="btn btn-danger btn-lg btn-block"
-                        onClick={() => { if(window.confirm('Are you sure?')) { reset(); }}}
+                        onClick={handleReset}
                     >
                         Reset
                     </button>
                     :
-                    <button
-                        type="button"
-                        className="btn btn-success btn-lg btn-block"
-                        onClick={() => { if(window.confirm('Really that\'s awesome?')) { setExportPrev(true); }}}
-                    >
-                        Export Previous Run as Best
-                    </button>
+                    prevSegments.length > 0 ?
+                        <button
+                            type="button"
+                            className="btn btn-success btn-lg btn-block"
+                            onClick={handleExport}
+                        >
+                            Export Previous Run as Best
+                        </button>
+                        :
+                        null
                 }
             </div>
         );
