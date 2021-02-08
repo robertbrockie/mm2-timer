@@ -55,7 +55,8 @@ function App() {
     if (exportPrev) {
         return (
             <div className="container">
-                <h1>New Best Time!</h1>
+                <img className="logo" src="/images/logo.png"/>
+                <br/>
                 <pre>
                     {JSON.stringify(prevSegments, null, 2)}
                 </pre>
@@ -71,8 +72,7 @@ function App() {
     } else {
         return (
             <div className="container">
-                <img className="logo" src="/images/logo.png"/>
-                <br/>
+                
                 <table className="table table-borderless table-sm">
                     <thead>
                         <tr>
