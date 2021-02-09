@@ -31,7 +31,7 @@ export default [
     { label: 'Wood Man', image: '/images/wood.png' },
     { label: 'Mecha Dragon', image: '/images/dragon.png' },
     { label: 'Picopico-kun', image: '/images/picopico.png' },
-    { label: 'Gut Tank', image: '/images/gutstank.png' },
+    { label: 'Guts Tank', image: '/images/gutstank.png' },
     { label: 'Boobeam', image: '/images/boobeam.png'},
     { label: 'Wily Machine 2', image: '/images/machine.png' }, 
     { label: 'Alien', image: '/images/alien.png' },
