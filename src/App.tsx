@@ -9,6 +9,7 @@ function App() {
     const [startTimer, setStartTimer] = useState(false);
     const [exportPrev, setExportPrev] = useState(false);
     const [seconds, setSeconds] = useState(0);
+    const [key, setKey] = useState(undefined);
 
     useEffect(() => {
         if (startTimer) {
@@ -19,6 +20,27 @@ function App() {
             setSeconds(0);
         }
     }, [startTimer, seconds]);
+
+    useEffect(() => {
+        // FIXME: there is a big bug here, rethink this.
+        const keyHandler = (event: { keyCode: any; }) => {
+            const { keyCode } = event;
+
+            switch (keyCode) {
+                case 32: //space (clunk!)
+                    handleClunk();
+                    break;
+                case 114: // r (reset)
+                    handleReset();
+                    break;
+            }
+
+            setKey(key);
+        }
+
+        window.addEventListener('keypress', keyHandler);
+        return () => window.removeEventListener('keypress', keyHandler);
+    }, [key]);
 
     function handleClunk() {
         setStartTimer(true);
