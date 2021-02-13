@@ -100,6 +100,7 @@ function App() {
                             <tr>
                                 <th scope="col"></th>
                                 <th scope="col"></th>
+                                <th scope="col"></th>
                                 <th scope="col" className="text-center">Current</th>
                                 <th scope="col" className="text-center">Past</th>
                                 <th scope="col" className="text-center">Best</th>
@@ -110,6 +111,15 @@ function App() {
                                 <tr key={index}  className={`${activeSegment === index ? 'table-warning' : ''}`}>
                                     <th scope="row"><img className="split" src={segment.image}/></th>
                                     <td className="split-label align-middle">{segment.label}</td>
+                                    <td>
+                                    {activeSegment > index ?
+                                        <div className={`align-middle text-center alert ${runningSegments[index] - BestSegments[index] > 0 ? 'alert-danger' : 'alert-success'}`} role="alert">
+                                            {formatSeconds(Math.abs(runningSegments[index] - BestSegments[index]))}
+                                        </div>
+                                        :
+                                        ''
+                                    }
+                                    </td>
                                     <td className="align-middle text-center split-current">
                                         {activeSegment === index ? formatSeconds(seconds) : runningSegments[index] ? formatSeconds(runningSegments[index]) : ''}
                                     </td>
