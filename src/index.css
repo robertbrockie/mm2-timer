@@ -63,3 +63,9 @@ td.split-best {
   font-weight: bold;
 }
 
+.alert {
+  font-family: monospace !important;
+  font-weight: bold;
+  margin-bottom: unset;
+}
+
