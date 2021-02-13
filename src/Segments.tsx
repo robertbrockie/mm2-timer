@@ -4,21 +4,21 @@ export interface Segment {
 }
 
 export const BestSegments = [
-    127,
-    312,
-    486,
-    640,
-    803,
-    975,
-    1194,
-    1365,
-    1551,
-    1698,
-    1806,
-    2071,
-    2234,
-    2476,
-  ];
+  109,
+  313,
+  491,
+  628,
+  785,
+  944,
+  1158,
+  1341,
+  1527,
+  1673,
+  1772,
+  2040,
+  2242,
+  2345
+];
 
 export default [
     { label: 'Flash Man', image: '/images/flash.png'},
