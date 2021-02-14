@@ -22,7 +22,6 @@ function App() {
     }, [startTimer, seconds]);
 
     useEffect(() => {
-        // FIXME: there is a big bug here, rethink this.
         const keyHandler = (event: { keyCode: any; }) => {
             const { keyCode } = event;
 
@@ -40,7 +39,7 @@ function App() {
 
         window.addEventListener('keypress', keyHandler);
         return () => window.removeEventListener('keypress', keyHandler);
-    }, [key]);
+    }, [key, activeSegment, seconds]);
 
     function handleClunk() {
         setStartTimer(true);
@@ -137,7 +136,7 @@ function App() {
                     <button
                         type="button"
                         className="btn btn-primary btn-lg btn-block"
-                        onClick={handleClunk}
+                        onClick={() => handleClunk()}
                     >
                         { activeSegment === -1 ? 'Let\'s Go!' : 'Clunk!' }
                     </button>
