@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Segments, { Segment, BestSegments } from './Segments';
+import Promo from './Promo';
 import { formatSeconds } from './utils/time';
 
 function App() {
@@ -81,6 +82,7 @@ function App() {
 
     return (
         <div className="container">
+            <Promo />
             <img className="logo" src="/images/logo.png"/>
             <br/>
             { exportPrev ? 
