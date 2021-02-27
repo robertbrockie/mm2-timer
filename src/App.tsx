@@ -14,6 +14,8 @@ function App() {
 
     useEffect(() => {
         if (startTimer) {
+            // don't depend on on setTimeout (or setInterval) to actually be accurate
+            // about the triggering, so determine the time based of Date.
             const timeout = setTimeout(() => setSeconds(Date.now() - startTimer), 100);
         
             return () => clearTimeout(timeout);
