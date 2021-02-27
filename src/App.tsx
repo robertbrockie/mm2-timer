@@ -6,14 +6,14 @@ function App() {
     const [activeSegment, setActiveSegment] = useState(-1);
     const [runningSegments, setRunningSegments] = useState<Array<number>>([]);
     const [prevSegments, setPrevSegments] = useState<Array<number>>([]);
-    const [startTimer, setStartTimer] = useState(false);
+    const [startTimer, setStartTimer] = useState(0);
     const [exportPrev, setExportPrev] = useState(false);
     const [seconds, setSeconds] = useState(0);
     const [key, setKey] = useState(undefined);
 
     useEffect(() => {
         if (startTimer) {
-            const timeout = setTimeout(() => setSeconds(seconds + 1), 1000);
+            const timeout = setTimeout(() => setSeconds(Date.now() - startTimer), 100);
         
             return () => clearTimeout(timeout);
         } else {
@@ -42,7 +42,9 @@ function App() {
     }, [key, activeSegment, seconds]);
 
     function handleClunk() {
-        setStartTimer(true);
+        if (startTimer === 0) {
+            setStartTimer(Date.now());
+        }
 
         if (activeSegment < Segments.length) {
             // store the last time
@@ -60,7 +62,7 @@ function App() {
 
     function reset() {
         setActiveSegment(-1);
-        setStartTimer(false);
+        setStartTimer(0);
         setSeconds(0);
         setRunningSegments([]);
     }
