@@ -10,12 +10,11 @@ function App() {
     const [startTimer, setStartTimer] = useState(0);
     const [exportPrev, setExportPrev] = useState(false);
     const [seconds, setSeconds] = useState(0);
-    const [key, setKey] = useState(undefined);
 
     useEffect(() => {
         if (startTimer) {
-            // don't depend on on setTimeout (or setInterval) to actually be accurate
-            // about the triggering, so determine the time based of Date.
+            // don't depend on setTimeout (or setInterval) to actually be accurate
+            // about the triggering, so determine the time based off Date.
             const timeout = setTimeout(() => setSeconds(Date.now() - startTimer), 100);
         
             return () => clearTimeout(timeout);
@@ -25,24 +24,18 @@ function App() {
     }, [startTimer, seconds]);
 
     useEffect(() => {
-        const keyHandler = (event: { keyCode: any; }) => {
-            const { keyCode } = event;
-
-            switch (keyCode) {
-                case 32: //space (clunk!)
-                    handleClunk();
-                    break;
-                case 114: // r (reset)
-                    handleReset();
-                    break;
+        const keyHandler = (event: KeyboardEvent) => {
+            if (event.code === 'Space' || event.key === ' ' || event.keyCode === 32) {
+                event.preventDefault();
+                handleClunk();
+            } else if (event.key === 'r' || event.key === 'R' || event.keyCode === 82 || event.keyCode === 114) {
+                handleReset();
             }
+        };
 
-            setKey(key);
-        }
-
-        window.addEventListener('keypress', keyHandler);
-        return () => window.removeEventListener('keypress', keyHandler);
-    }, [key, activeSegment, seconds]);
+        window.addEventListener('keydown', keyHandler);
+        return () => window.removeEventListener('keydown', keyHandler);
+    }, [activeSegment, runningSegments, startTimer, seconds]);
 
     function handleClunk() {
         if (startTimer === 0) {
@@ -51,7 +44,7 @@ function App() {
 
         if (activeSegment < Segments.length) {
             // store the last time
-            if (activeSegment != -1) {
+            if (activeSegment !== -1) {
                 let newRunningSegments = [...runningSegments, seconds];
                 setRunningSegments(newRunningSegments);
             }
@@ -85,7 +78,7 @@ function App() {
     return (
         <div className="container">
             <Promo />
-            <img className="logo" src="/images/logo.png"/>
+            <img className="logo" src="/images/logo.png" alt="Mega Man 2" />
             <br/>
             { exportPrev ? 
                 <React.Fragment>
@@ -113,8 +106,8 @@ function App() {
                         </thead>
                         <tbody>
                             { Segments.map((segment: Segment, index: number) =>
-                                <tr key={index}  className={`${activeSegment === index ? 'table-warning' : ''}`}>
-                                    <th scope="row"><img className="split" src={segment.image}/></th>
+                                <tr key={index} className={`${activeSegment === index ? 'table-warning' : ''}`}>
+                                    <th scope="row"><img className="split" src={segment.image} alt={segment.label} /></th>
                                     <td className="split-label align-middle">{segment.label}</td>
                                     <td>
                                     {activeSegment > index ?
